@@ -46,8 +46,14 @@ main {
 }
 
 @media (max-width: 992px) {
+  #navbar {
+    width: 100%;
+    background-color: var(--darkGreenOpacity);
+    z-index: 1;
+    box-shadow: var(--shadow2db);
+  }
   main {
-    padding-top: 13.5rem;
+    /* padding-top: 1rem; */
   }
 }
 
