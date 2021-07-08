@@ -17,13 +17,13 @@
 </head>
 
 <body>
-    <%- include('../partials/navbar') %> 
+    <%-include('../partials/navbar')%> 
     <main>
-        <%- body %> 
+        <%-body%> 
     </main>
-    <% if (req.originalUrl !== "/") { %> 
-    <%- include('../partials/footer') %>
-    <% } %> 
+    <%if (req.originalUrl !== "/") {%> 
+    <%-include('../partials/footer')%>
+    <%}%> 
 </body>
 
 </html>

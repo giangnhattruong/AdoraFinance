@@ -131,7 +131,7 @@ app.get("/contact", (req, res) => {
   res.render("contact", { req });
 });
 
-app.post("/send", validateContact, sendEmail);
+app.post("/send", sendEmail);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page not found!", 404));
