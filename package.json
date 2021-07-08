@@ -4,12 +4,17 @@
   "description": "",
   "main": "adora.js",
   "dependencies": {
+    "connect-flash": "^0.1.1",
+    "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
     "ejs-mate": "^3.0.0",
     "express": "^4.17.1",
     "express-mongo-sanitize": "^2.1.0",
+    "express-session": "^1.17.2",
     "helmet": "^4.6.0",
     "joi": "^17.4.0",
+    "multiparty": "^4.2.2",
+    "nodemailer": "^6.6.2",
     "sanitize-html": "^2.4.0"
   },
   "devDependencies": {},

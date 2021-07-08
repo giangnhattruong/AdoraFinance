@@ -8,7 +8,7 @@
     alt="">
   <h2 class="text-center mb-5">Contact us for more details</h2>
   <form id="contact-form" class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 d-flex flex-column p-5 needs-validation"
-    action="/contact" method="POST" novalidate>
+    action="send" method="POST" enctype = "multipart/form-data" novalidate>
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
       <input id="name" type="text" name="name" class="form-control" placeholder="Enter your name" required>
@@ -18,7 +18,7 @@
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
-      <input id="email" type="email" name="email" class="form-control" placeholder="Enter your email" required>
+      <input id="email" type="email" name="email" class="form-control" placeholder="Enter your email" aria-describedby="emailHelp" required>
       <div class="valid-feedback">
         Looks good!
       </div>
@@ -31,5 +31,5 @@
         Looks good!
       </div>
     </div>
-    <button class="button text-center align-self-center mt-3">Submit</button>
+    <button type="submit" value="submit" class="button text-center align-self-center mt-3">Submit</button>
   </form>
