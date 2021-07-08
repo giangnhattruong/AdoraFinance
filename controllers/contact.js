@@ -35,7 +35,7 @@ module.exports.sendEmail = (req, res) => {
       from: data.name,
       to: process.env.EMAIL,
       subject: "Request from Adora finance user",
-      text: `${data.name} <${data.email}> \n${data.message}`,
+      text: `Name: ${data.name} \nEmail: ${data.email} \nMessage: ${data.message}`,
     };
 
     //3.
