@@ -18,6 +18,11 @@ const { sendEmail } = require("./controllers/contact.js");
 const secret = process.env.SECRET || "simplesectionsecret";
 const dbUrl = process.env.DB_URL;
 
+const nodemailer = require("nodemailer");
+const multiparty = require("multiparty");
+const email = process.env.EMAIL;
+const pass = process.env.PASS;
+
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -118,6 +123,23 @@ app.use(
     },
   })
 );
+
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587 || 2525,
+  auth: {
+    user: email,
+    pass: pass
+  },
+});
+
+transporter.verify(function (error, success) {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("Server is ready to take our messages");
+  }
+});
 
 app.get("/", (req, res) => {
   res.render("home", { req });
