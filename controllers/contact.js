@@ -1,4 +1,4 @@
-const wrapAsync = require("./ultils/wrapAsync");
+const wrapAsync = require("../ultils/wrapAsync");
 const nodemailer = require("nodemailer");
 const multiparty = require("multiparty");
 const email = process.env.EMAIL;
