@@ -3,7 +3,24 @@ const multiparty = require("multiparty");
 const email = process.env.EMAIL;
 const pass = process.env.PASS;
 
-module.exports.sendEmail = (req, res, next) => {
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587 || 2525,
+    auth: {
+      user: email,
+      pass: pass
+    },
+  });
+  
+  transporter.verify(function (error, success) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Server is ready to take our messages");
+    }
+  });
+
+module.exports.sendEmail = (req, res) => {
   //1.
   let form = new multiparty.Form();
   let data = {};

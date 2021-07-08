@@ -14,14 +14,9 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const { validateContact } = require("./middleware");
 const ExpressError = require("./ultils/ExpressError");
-const { sendEmail } = require("./controllers/contact.js");
+const { sendEmail } = require("./controllers/contact");
 const secret = process.env.SECRET || "simplesectionsecret";
 const dbUrl = process.env.DB_URL;
-
-const nodemailer = require("nodemailer");
-const multiparty = require("multiparty");
-const email = process.env.EMAIL;
-const pass = process.env.PASS;
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
@@ -124,23 +119,6 @@ app.use(
   })
 );
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587 || 2525,
-  auth: {
-    user: email,
-    pass: pass
-  },
-});
-
-transporter.verify(function (error, success) {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log("Server is ready to take our messages");
-  }
-});
-
 app.get("/", (req, res) => {
   res.render("home", { req });
 });
@@ -153,7 +131,7 @@ app.get("/contact", (req, res) => {
   res.render("contact", { req });
 });
 
-app.post("/send", validateContact, sendEmail);
+app.post("/send", sendEmail);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page not found!", 404));
