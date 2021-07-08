@@ -25,7 +25,7 @@ module.exports.sendEmail = wrapAsync(async (req, res, next) => {
   //1.
   let form = new multiparty.Form();
   let data = {};
-  form.parse(req, function (err, fields) {
+  form.parse(req, async function (err, fields) {
     console.log(fields);
     Object.keys(fields).forEach(function (property) {
       data[property] = fields[property].toString();
