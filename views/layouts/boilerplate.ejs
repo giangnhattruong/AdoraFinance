@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png"
+        href="https://res.cloudinary.com/jamestan/image/upload/v1624088702/adora-256px_razuwc.png">
+    <title>Adora</title>
+    <link rel="stylesheet" href="/bootstrap502/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Philosopher&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/fontawesome5153/css/all.min.css">
+    <script defer src="/bootstrap502/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+    <%- include('../partials/navbar') %> 
+    <main>
+        <%- body %> 
+    </main>
+    <% if (req.originalUrl !== "/") { %> 
+    <%- include('../partials/footer') %>
+    <% } %> 
+</body>
+
+</html>

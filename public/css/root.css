@@ -1,0 +1,69 @@
+:root {
+  font-size: 16px;
+  --textFont: Roboto, sans-serif;
+  --brandFont: "Philosopher", sans-serif;
+  --textColor: white;
+  --textMuted: rgba(255, 255, 255, 0.671);
+  --logoColor: #f7941d;
+  --backgroundColor: #35475f;
+  --buttonColor: #03dac6;
+  --greenOpacity: #03dac550;
+  --buttonHoveringColor: #018786;
+  --darkGreenOpacity: #2f3f54bd;
+  --errorColor: #B00020;
+  --redOpacity: #b00020a1;
+  --shadow2db: 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px rgba(0, 0, 0, 0.12),
+    0px 1px 5px rgba(0, 0, 0, 0.2);
+  --body2: 0.875rem;
+  --body1: 1rem;
+  --h6: 1.25rem;
+  --h5: 1.5rem;
+  --h4: 2.125rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--textFont);
+  color: var(--textColor);
+}
+
+body {
+  background-color: var(--backgroundColor);
+}
+
+main {
+  position: relative;
+  padding-top: 6rem;
+  min-height: calc(100vh - 3.3rem);
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+main h2 {
+  font-size: var(--h5);
+  text-transform: uppercase;
+}
+
+main p {
+  font-size: var(--body1);
+}
+
+@media (max-width: 992px) {
+  :root {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  :root {
+    font-size: 9px;
+  }
+}

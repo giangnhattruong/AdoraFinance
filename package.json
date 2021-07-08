@@ -1,0 +1,23 @@
+{
+  "name": "ara",
+  "version": "1.0.0",
+  "description": "",
+  "main": "adora.js",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "ejs-mate": "^3.0.0",
+    "express": "^4.17.1",
+    "express-mongo-sanitize": "^2.1.0",
+    "helmet": "^4.6.0",
+    "joi": "^17.4.0",
+    "sanitize-html": "^2.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node adora.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

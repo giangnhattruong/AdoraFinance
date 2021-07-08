@@ -1,0 +1,32 @@
+@import url("/css/root.css");
+@import url("/css/navbar.css");
+@import url("/css/footer.css");
+@import url("/css/buttons.css");
+
+main {
+  padding-top: 9rem;
+  padding-bottom: 3rem;
+}
+
+main h2 {
+    text-align: center;
+}
+
+.alert {
+  background-color: var(--redOpacity);
+  border-radius: 0.6rem;
+}
+
+@media (max-width: 768px) {
+  #icons {
+    padding-top: 5rem;
+    padding-left: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  #icons {
+    padding-top: 5rem;
+    padding-left: 1rem;
+  }
+}
