@@ -19,6 +19,7 @@
 <body>
     <%- include('../partials/navbar') %> 
     <main>
+        <%- include('../partials/flash') %> 
         <%- body %> 
     </main>
     <% if (req.originalUrl !== "/") { %> 
