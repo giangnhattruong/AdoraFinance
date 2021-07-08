@@ -148,11 +148,14 @@ app.post("/send", (req, res) => {
       if (err) {
         console.log(err);
         res.status(500).send("Something went wrong.");
+        req.flash("error", "Something went wrong.");
       } else {
         res.status(200).send("Email successfully sent to recipient!");
+        req.flash("success", "Successfully sent your message!");
       }
     });
   });
+  res.redirect('/contact');
 });
 
 // app.post("/contact", validateContact, wrapAsync((req, res) => {}));
