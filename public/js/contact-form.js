@@ -12,7 +12,7 @@ const formEvent = form.addEventListener("submit", (event) => {
 
 const sendMail = (mail) => {
   //1.
-  fetch("https://limitless-savannah-41564.herokuapp.com/send", {
+  fetch("https://limitless-savannah-41564.herokuapp.com/send" || "https://adora.finance/send" , {
     method: "post", //2.
     body: mail, //3.
   }).then((response) => {
