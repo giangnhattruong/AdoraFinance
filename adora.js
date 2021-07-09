@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const nodemailer = require("nodemailer");
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const path = require("path");
