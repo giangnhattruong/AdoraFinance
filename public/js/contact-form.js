@@ -5,18 +5,18 @@ const formEvent = form.addEventListener("submit", (event) => {
 
   //2.
   let mail = new FormData(form);
-  console.log(`mail: ${mail}`)
   //3.
   sendMail(mail);
 });
 
-const sendMail = (mail) => {
+const sendMail = async (mail) => {
   //1.
-  fetch("https://limitless-savannah-41564.herokuapp.com/send", {
+  console.dir(`mail: ${mail}`)
+  await fetch("https://limitless-savannah-41564.herokuapp.com/send", {
     method: "post", //2.
     body: mail, //3.
   }).then((response) => {
-    console.log(response);
+    console.log(`Response: ${response.json()}`);
     return response.json();
   });
 };
