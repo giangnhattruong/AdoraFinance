@@ -10,7 +10,7 @@ const path = require("path");
 const ejsMate = require("ejs-mate");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
-// const flash = require("connect-flash");
+const flash = require("connect-flash");
 const session = require("express-session");
 // const { validateContact } = require("./middleware");
 const ExpressError = require("./ultils/ExpressError");
@@ -59,13 +59,13 @@ const sessionOptions = {
   },
 };
 app.use(session(sessionOptions));
-// app.use(flash());
+app.use(flash());
 
-// app.use((req, res, next) => {
-//   res.locals.success = req.flash("success");
-//   res.locals.error = req.flash("error");
-//   next();
-// });
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
 
 app.use(
   mongoSanitize({

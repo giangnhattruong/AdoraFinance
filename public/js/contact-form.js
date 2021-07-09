@@ -10,14 +10,15 @@ const formEvent = form.addEventListener("submit", (event) => {
 });
 
 const sendEmail = (mail) => {
-  try {
     fetch("https://limitless-savannah-41564.herokuapp.com/send", {
       method: "post",
       body: mail,
     }).then((response) => {
-      return response.json();
+      try {
+        return response.json()
+      } catch (error) {
+        console.log("Fetch error: ");
+        console.error(error);
+      }
     });
-  } catch (error) {
-    console.log(error);
-  }
 };
