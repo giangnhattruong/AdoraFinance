@@ -10,12 +10,12 @@ const path = require("path");
 const ejsMate = require("ejs-mate");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
-const flash = require("connect-flash");
+// const flash = require("connect-flash");
 const session = require("express-session");
 // const { validateContact } = require("./middleware");
 const ExpressError = require("./ultils/ExpressError");
 const { sendEmail } = require("./controllers/contact");
-const secret = process.env.SECRET || "simplesectionsecret";
+const secret = process.env.SECRET || "simplesessionsecret";
 const dbUrl = process.env.DB_URL;
 
 mongoose.connect(dbUrl, {
@@ -59,13 +59,13 @@ const sessionOptions = {
   },
 };
 app.use(session(sessionOptions));
-app.use(flash());
+// app.use(flash());
 
-app.use((req, res, next) => {
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.locals.success = req.flash("success");
+//   res.locals.error = req.flash("error");
+//   next();
+// });
 
 app.use(
   mongoSanitize({
@@ -97,7 +97,9 @@ const connectSrcUrls = [
   "https://b.tiles.mapbox.com/",
   "https://events.mapbox.com/",
 ];
-const fontSrcUrls = ["https://fonts.gstatic.com"];
+const fontSrcUrls = [
+  "https://fonts.gstatic.com",
+];
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -111,7 +113,7 @@ app.use(
         "'self'",
         "blob:",
         "data:",
-        "https://res.cloudinary.com/jamestan/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT!
+        "https://res.cloudinary.com/jamestan/",
         "https://images.unsplash.com/",
       ],
       fontSrc: ["'self'", ...fontSrcUrls],

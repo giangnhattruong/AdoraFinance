@@ -24,7 +24,7 @@ module.exports.sendEmail = (req, res) => {
   //1.
   let form = new multiparty.Form();
   let data = {};
-  form.parse(req, async function (err, fields) {
+  form.parse(req, function (err, fields) {
     console.log(fields);
     Object.keys(fields).forEach(function (property) {
       data[property] = fields[property].toString();
@@ -35,11 +35,11 @@ module.exports.sendEmail = (req, res) => {
       from: data.name,
       to: process.env.EMAIL,
       subject: "Request from Adora finance user",
-      text: `Name: ${data.name} - Email: ${data.email} \nMessage: ${data.message}`,
+      text: `Name`,
     };
 
     //3.
-    transporter.sendMail(mail, (err, data) => {
+    await transporter.sendMail(mail, (err, data) => {
       if (err) {
         console.log(err);
         res.status(500).send("Something went wrong.");
