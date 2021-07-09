@@ -9,15 +9,16 @@ const formEvent = form.addEventListener("submit", (event) => {
   form.elements.message = "";
 });
 
-const sendEmail = async (mail) => {
+const sendEmail = (mail) => {
   try {
-    await fetch("https://limitless-savannah-41564.herokuapp.com/send", {
+    fetch("https://limitless-savannah-41564.herokuapp.com/send", {
       method: "post",
       body: mail,
     }).then((response) => {
       return response.json();
     });
   } catch (error) {
-    console.log(error);
+    console.log("Error happened here!");
+    console.error(error);
   }
 };

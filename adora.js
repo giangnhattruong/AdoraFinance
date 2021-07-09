@@ -4,7 +4,6 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const app = express();
-const cors = require("cors");
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const path = require("path");
@@ -32,7 +31,7 @@ db.once("open", () => {
   console.log("Database connected");
 });
 
-app.use(cors());
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
