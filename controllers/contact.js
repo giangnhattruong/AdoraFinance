@@ -39,7 +39,7 @@ module.exports.sendEmail = (req, res) => {
     };
 
     //3.
-    await transporter.sendMail(mail, (err, data) => {
+    transporter.sendMail(mail, (err, data) => {
       if (err) {
         console.log(err);
         res.status(500).send("Something went wrong.");
