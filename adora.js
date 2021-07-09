@@ -24,7 +24,6 @@ mongoose.connect(dbUrl, {
   useUnifiedTopology: true,
   useFindAndModify: false,
 });
-//Test connection
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", () => {
