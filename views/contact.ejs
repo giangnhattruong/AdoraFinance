@@ -8,22 +8,18 @@
     alt="">
     <%-include("partials/flash")%> 
     <h2 class="text-center mb-5">Contact us for more details</h2>
-    <!-- <form id="contact-form"
-      class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 d-flex flex-column p-5 needs-validation"
-      action="send" method="POST" enctype="multipart/form-data" novalidate> -->
-    <form id="contact-form"
-      class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 d-flex flex-column p-5 needs-validation"
-      action="/contact" method="POST" enctype="multipart/form-data" novalidate>
+    <form class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 d-flex flex-column p-5 needs-validation"
+     method="POST" action="/contact" novalidate>
       <div class="mb-3">
         <label for="name" class="form-label">Name</label>
-        <input id="name" type="text" name="name" class="form-control" placeholder="Enter your name" required>
+        <input id="name" type="text" name="contact[name]" class="form-control" placeholder="Enter your name" required>
         <div class="valid-feedback">
           Looks good!
         </div>
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input id="email" type="email" name="email" class="form-control" placeholder="Enter your email"
+        <input id="email" type="email" name="contact[email]" class="form-control" placeholder="Enter your email"
           aria-describedby="emailHelp" required>
         <div class="valid-feedback">
           Looks good!
@@ -31,11 +27,11 @@
       </div>
       <div class="mb-3">
         <label for="message" class="form-label">Message</label>
-        <textarea id="message" name="message" placeholder="Enter your message" cols="30" rows="3" class="form-control"
+        <textarea id="message" name="contact[message]" placeholder="Enter your message" cols="30" rows="3" class="form-control"
           required></textarea>
         <div class="valid-feedback">
           Looks good!
         </div>
       </div>
-      <button type="submit" value="submit" class="button text-center align-self-center mt-3">Submit</button>
+      <button class="button text-center align-self-center mt-3">Submit</button>
     </form>

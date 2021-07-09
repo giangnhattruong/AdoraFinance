@@ -4,7 +4,6 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
@@ -14,13 +13,12 @@ const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const flash = require("connect-flash");
 const session = require("express-session");
-// const { validateContact } = require("./middleware");
+const { validateContact } = require("./middleware");
 const ExpressError = require("./ultils/ExpressError");
-const { sendEmail } = require("./controllers/contact");
 const secret = process.env.SECRET || "simplesessionsecret";
 const dbUrl = process.env.DB_URL;
-const email = process.env.EMAIL;
-const pass = process.env.PASS;
+const myEmail = process.env.EMAIL;
+const myPass = process.env.PASS;
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
@@ -34,20 +32,19 @@ db.once("open", () => {
   console.log("Database connected");
 });
 
-
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
-// app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.urlencoded({ extended:true }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 const store = MongoStore.create({
   mongoUrl: dbUrl,
-  touchAfter: 24*60*60,
+  touchAfter: 24 * 60 * 60,
   crypto: {
-      secret
-  }
+    secret,
+  },
 });
 
 const sessionOptions = {
@@ -102,9 +99,7 @@ const connectSrcUrls = [
   "https://b.tiles.mapbox.com/",
   "https://events.mapbox.com/",
 ];
-const fontSrcUrls = [
-  "https://fonts.gstatic.com",
-];
+const fontSrcUrls = ["https://fonts.gstatic.com"];
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -126,7 +121,7 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
+app.get("/", validateContact, (req, res) => {
   res.render("home", { req });
 });
 
@@ -138,41 +133,32 @@ app.get("/contact", (req, res) => {
   res.render("contact", { req });
 });
 
-// app.post("/send", sendEmail);
-
-// POST route from contact form
-app.post('/contact', (req, res) => {
-
-  // Instantiate the SMTP server
+app.post("/contact", (req, res) => {
+  const { name, email, message } = req.body.contact;
   const smtpTrans = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
+    host: "smtp.gmail.com",
     port: 465,
     secure: true,
     auth: {
-      user: email,
-      pass: pass,
-    }
-  })
-
-  // Specify what the email will look like
+      user: myEmail,
+      pass: myPass,
+    },
+  });
   const mailOpts = {
-    from: 'Your sender info here', // This is ignored by Gmail
-    to: email,
-    subject: 'New message from contact',
-    text: `${req.body.name} (${req.body.email}) says: ${req.body.message}`
-  }
-
-  // Attempt to send the email
+    from: "Me", // This is ignored by Gmail
+    to: "it@adora.finance",
+    subject: "New message from Adora contact",
+    text: `${name} (${email}) says: ${message}`,
+  };
   smtpTrans.sendMail(mailOpts, (error, response) => {
     if (error) {
       req.flash("error", "Something went wrong."); // Show a page indicating failure
-    }
-    else {
+    } else {
       req.flash("success", "Successfully sent your message!"); // Show a page indicating success
     }
-    res.redirect('/contact');
-  })
-})
+    res.redirect("/contact");
+  });
+});
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page not found!", 404));
