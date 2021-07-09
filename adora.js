@@ -4,7 +4,6 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const app = express();
-const nodemailer = require("nodemailer");
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const path = require("path");
@@ -13,12 +12,10 @@ const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const flash = require("connect-flash");
 const session = require("express-session");
-const { validateContact } = require("./middleware");
 const ExpressError = require("./ultils/ExpressError");
 const secret = process.env.SECRET || "simplesessionsecret";
 const dbUrl = process.env.DB_URL;
-const myEmail = process.env.EMAIL;
-const myPass = process.env.PASS;
+const mainRoutes = require("./routes/main.js");
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
@@ -121,44 +118,7 @@ app.use(
   })
 );
 
-app.get("/", validateContact, (req, res) => {
-  res.render("home", { req });
-});
-
-app.get("/about", (req, res) => {
-  res.render("about", { req });
-});
-
-app.get("/contact", (req, res) => {
-  res.render("contact", { req });
-});
-
-app.post("/contact", (req, res) => {
-  const { name, email, message } = req.body.contact;
-  const smtpTrans = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      user: myEmail,
-      pass: myPass,
-    },
-  });
-  const mailOpts = {
-    from: "Me", // This is ignored by Gmail
-    to: "it@adora.finance",
-    subject: "New message from Adora contact",
-    text: `${name} (${email}) says: ${message}`,
-  };
-  smtpTrans.sendMail(mailOpts, (error, response) => {
-    if (error) {
-      req.flash("error", "Something went wrong."); // Show a page indicating failure
-    } else {
-      req.flash("success", "Successfully sent your message!"); // Show a page indicating success
-    }
-    res.redirect("/contact");
-  });
-});
+app.use("/", mainRoutes);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page not found!", 404));
