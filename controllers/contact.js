@@ -1,3 +1,4 @@
+const wrapAsync = require("../ultils/wrapAsync");
 const nodemailer = require("nodemailer");
 const multiparty = require("multiparty");
 const email = process.env.EMAIL;
@@ -20,7 +21,7 @@ const transporter = nodemailer.createTransport({
     }
   });
 
-module.exports.sendEmail = (req, res) => {
+module.exports.sendEmail = wrapAsync(async (req, res) => {
   //1.
   let form = new multiparty.Form();
   let data = {};
@@ -34,12 +35,12 @@ module.exports.sendEmail = (req, res) => {
     const mail = {
       from: data.name,
       to: process.env.EMAIL,
-      subject: "Request from Adora finance user",
-      text: `Name`,
+      subject: "Message from Adora Finance user",
+      text: `Name: ${data.name} \nEmail: ${data.email} \nMessage: ${data.message}`,
     };
 
     //3.
-    transporter.sendMail(mail, (err, data) => {
+    await transporter.sendMail(mail, (err, data) => {
       if (err) {
         console.log(err);
         res.status(500).send("Something went wrong.");
@@ -48,4 +49,4 @@ module.exports.sendEmail = (req, res) => {
       }
     });
   });
-};
+});
