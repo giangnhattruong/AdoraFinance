@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const path = require("path");
@@ -17,6 +18,8 @@ const ExpressError = require("./ultils/ExpressError");
 const { sendEmail } = require("./controllers/contact");
 const secret = process.env.SECRET || "simplesessionsecret";
 const dbUrl = process.env.DB_URL;
+const email = process.env.EMAIL;
+const pass = process.env.PASS;
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
@@ -35,7 +38,8 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended:true }));
 
 const store = MongoStore.create({
   mongoUrl: dbUrl,
@@ -133,7 +137,41 @@ app.get("/contact", (req, res) => {
   res.render("contact", { req });
 });
 
-app.post("/send", sendEmail);
+// app.post("/send", sendEmail);
+
+// POST route from contact form
+app.post('/contact', (req, res) => {
+
+  // Instantiate the SMTP server
+  const smtpTrans = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: email,
+      pass: pass,
+    }
+  })
+
+  // Specify what the email will look like
+  const mailOpts = {
+    from: 'Your sender info here', // This is ignored by Gmail
+    to: email,
+    subject: 'New message from contact',
+    text: `${req.body.name} (${req.body.email}) says: ${req.body.message}`
+  }
+
+  // Attempt to send the email
+  smtpTrans.sendMail(mailOpts, (error, response) => {
+    if (error) {
+      req.flash("error", "Something went wrong."); // Show a page indicating failure
+    }
+    else {
+      req.flash("success", "Successfully sent your message!"); // Show a page indicating success
+    }
+    res.redirect('/contact');
+  })
+})
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page not found!", 404));

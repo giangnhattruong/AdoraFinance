@@ -1,16 +1,19 @@
 <%layout('layouts/boilerplate')%>
   <link rel="stylesheet" href="/css/contact.min.css">
   <script defer src="/js/form-validation.js"></script>
-  <script defer src="/js/contact-form.js"></script>
+  <!-- <script defer src="/js/contact-form.js"></script> -->
 
   <img class="background"
     src="https://res.cloudinary.com/jamestan/image/upload/v1625558870/photo-1620121478247-ec786b9be2fa_utcwoi.jpg"
     alt="">
     <%-include("partials/flash")%> 
     <h2 class="text-center mb-5">Contact us for more details</h2>
+    <!-- <form id="contact-form"
+      class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 d-flex flex-column p-5 needs-validation"
+      action="send" method="POST" enctype="multipart/form-data" novalidate> -->
     <form id="contact-form"
       class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 d-flex flex-column p-5 needs-validation"
-      action="send" method="POST" enctype="multipart/form-data" novalidate>
+      action="/contact" method="POST" enctype="multipart/form-data" novalidate>
       <div class="mb-3">
         <label for="name" class="form-label">Name</label>
         <input id="name" type="text" name="name" class="form-control" placeholder="Enter your name" required>
