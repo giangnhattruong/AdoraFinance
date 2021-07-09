@@ -25,7 +25,7 @@ module.exports.sendEmail = wrapAsync(async (req, res) => {
   //1.
   let form = new multiparty.Form();
   let data = {};
-  form.parse(req, function (err, fields) {
+  await form.parse(req, async function (err, fields) {
     console.log(fields);
     Object.keys(fields).forEach(function (property) {
       data[property] = fields[property].toString();
@@ -49,4 +49,5 @@ module.exports.sendEmail = wrapAsync(async (req, res) => {
       }
     });
   });
+  res.redirect('/contact')
 });
