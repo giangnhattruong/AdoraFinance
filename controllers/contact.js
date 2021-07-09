@@ -21,11 +21,11 @@ const transporter = nodemailer.createTransport({
     }
   });
 
-module.exports.sendEmail = wrapAsync(async (req, res) => {
+module.exports.sendEmail = (req, res) => {
   //1.
   let form = new multiparty.Form();
   let data = {};
-  await form.parse(req, async function (err, fields) {
+  form.parse(req, async function (err, fields) {
     console.log(fields);
     Object.keys(fields).forEach(function (property) {
       data[property] = fields[property].toString();
@@ -40,7 +40,7 @@ module.exports.sendEmail = wrapAsync(async (req, res) => {
     };
 
     //3.
-    await transporter.sendMail(mail, (err, data) => {
+    transporter.sendMail(mail, (err, data) => {
       if (err) {
         console.log(err);
         res.status(500).send("Something went wrong.");
@@ -50,4 +50,4 @@ module.exports.sendEmail = wrapAsync(async (req, res) => {
     });
   });
   res.redirect('/contact')
-});
+};
