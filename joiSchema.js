@@ -30,3 +30,13 @@ module.exports.contactSchema = Joi.object({
         message: Joi.string().required().escapeHTML()
     }).required()
 });
+
+module.exports.articleSchema = Joi.object({
+    article: Joi.object({
+        title: Joi.string().required().escapeHTML(),
+        category: Joi.string().required().escapeHTML(),
+        images: Joi.object(),
+        description: Joi.string().required().escapeHTML()
+    }).required(),
+    deleteImages: Joi.array()
+});

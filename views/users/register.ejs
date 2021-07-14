@@ -1,0 +1,40 @@
+<% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/css/contact.min.css">
+<script defer src="/js/form-validation.js"></script>
+<%- include('../partials/flash') %>
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+                <div class="card shadow mb-3 bg-secondary">
+                    <div class="card-body">
+                        <h5 class="card-title">Register</h5>
+                        <form class="bg-secondary" method="POST" action="/user/register" class="needs-validation" novalidate>
+                            <div class="form-group mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" id="email" name="email" class="form-control"
+                                    placeholder="youremail@domain.com" autofocus required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" id="username" name="username" class="form-control" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" id="password" name="password" class="form-control" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-success">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </div>

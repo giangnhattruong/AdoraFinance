@@ -1,36 +1,58 @@
-<% layout('layouts/boilerplate') %>
-  <link rel="stylesheet" href="/css/home.css">
+<!DOCTYPE html>
+<html lang="en">
 
-  <div class="row mx-0">
-    <div id="contents" class="col-10 offset-1 col-md-7 offset-md-1 d-flex flex-column">
-      <h1>
-        A CRYPTO CURRENCY
-        <br>THAT
-        <br><span class="stress">SIMPLIFIES YOUR WORLD</span>
-      </h1>
-      <div class="my-5 row">
-        <a class="col-6 offset-1 col-sm-4 offset-sm-0 col-xl-3 button text-center" href="/about">Learn More</a>
-        <div class="col-12 col-sm-1 p-3 py-sm-0"></div>
-        <a class="col-6 offset-1 col-sm-4 offset-sm-0 col-xl-3 text-center text-button" href="/about/#wallet">Get
-          Started</a>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png"
+    href="https://res.cloudinary.com/jamestan/image/upload/v1624088702/adora-256px_razuwc.png">
+  <title>Adora</title>
+  <link rel="stylesheet" href="/bootstrap502/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Philosopher&family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/fontawesome5153/css/all.min.css">
+  <link rel="stylesheet" href="/css/home.css">
+  <script defer src="/bootstrap502/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+  <%-include('partials/navbar')%>
+    <main>
+      <div class="row mx-0">
+        <div id="contents" class="col-10 offset-1 col-md-7 offset-md-1 d-flex flex-column">
+          <h1>
+            A CRYPTO CURRENCY
+            <br>THAT
+            <br><span class="stress">SIMPLIFIES YOUR WORLD</span>
+          </h1>
+          <div class="my-5 row">
+            <a class="col-6 offset-1 col-sm-4 offset-sm-0 col-xl-3 button text-center" href="/about">Learn More</a>
+            <div class="col-12 col-sm-1 p-3 py-sm-0"></div>
+            <a class="col-6 offset-1 col-sm-4 offset-sm-0 col-xl-3 text-center text-button" href="/about/#wallet">Get
+              Started</a>
+          </div>
+          <p class="col-6 col-sm-12">
+            From buying coffee to booking your package tour
+            <br>purchasing real estate. Adora makes your life much simpler.
+          </p>
+        </div>
+        <div id="icons" class="col-10 offset-1 col-md-3 align-self-center pb-5 d-flex flex-column">
+          <div class="icon d-flex align-items-center mb-5">
+            <i class="fas fa-th-large bd-highlight me-3"></i>
+            <p class="my-0">Usability</p>
+          </div>
+          <div class="icon d-flex align-items-center mb-5">
+            <i class="fas fa-angle-double-right me-3"></i>
+            <p class="my-0">Convenience</p>
+          </div>
+          <div class="icon d-flex align-items-center">
+            <i class="fas fa-shield-alt me-3"></i>
+            <p class="my-0">Security</p>
+          </div>
+        </div>
       </div>
-      <p class="col-6 col-sm-12">
-        From buying coffee to booking your package tour
-        <br>purchasing real estate. Adora makes your life much simpler.
-      </p>
-    </div>
-    <div id="icons" class="col-10 offset-1 col-md-3 align-self-center pb-5 d-flex flex-column">
-      <div class="icon d-flex align-items-center mb-5">
-        <i class="fas fa-th-large bd-highlight me-3"></i>
-        <p class="my-0">Usability</p>
-      </div>
-      <div class="icon d-flex align-items-center mb-5">
-        <i class="fas fa-angle-double-right me-3"></i>
-        <p class="my-0">Convenience</p>
-      </div>
-      <div class="icon d-flex align-items-center">
-        <i class="fas fa-shield-alt me-3"></i>
-        <p class="my-0">Security</p>
-      </div>
-    </div>
-  </div>
+</body>
+
+</html>

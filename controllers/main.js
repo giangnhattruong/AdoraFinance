@@ -3,15 +3,15 @@ const myEmail = process.env.EMAIL;
 const myPass = process.env.PASS;
 
 module.exports.renderHome = (req, res) => {
-  res.render("home", {req});
+  res.render("home");
 };
 
 module.exports.renderAbout = (req, res) => {
-  res.render("about", {req});
+  res.render("about");
 };
 
 module.exports.renderContactForm = (req, res) => {
-  res.render("contact", {req});
+  res.render("contact");
 };
 
 module.exports.sendEmail = (req, res) => {

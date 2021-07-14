@@ -1,0 +1,41 @@
+<% layout("layouts/boilerplate.ejs") %>
+<link rel="stylesheet" href="/css/news.min.css">
+<%- include("../partials/flash.ejs") %>
+    <div class="container">
+            <%- include("../partials/searchNews.ejs") %>
+            <% if (currentUser) {%>
+                    <a href="/news/article/new" class="button mb-5">Create new article</a>
+                <% } %>
+                    <% if (!articles.length){ %>
+                        <p class="my-3">No article found.</p>
+                        <% } else { %>
+                    <% for (let article of articles) { %>
+                        <div class="card mb-3">
+                            <div class="row">
+                                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                    <% if (!article.images.length) {%>
+                                        <img class="img-fluid h-100" src="https://res.cloudinary.com/jamestan/image/upload/v1626106460/Adora-background-thumbnail_luhrkl.jpg" alt="Adora news thumbnail">
+                                        <% } else { %>
+                                            <img class="img-fluid h-100" src="<%= article.images[0].url %>"
+                                                alt="">
+                                            <% } %>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="cart-title">
+                                            <a href="/news/article/<%= article._id %>" class="text-decoration-none text-white">
+                                                <%= article.title %>
+                                            </a>
+                                        </h5>
+                                        <p class="card-text">
+                                            <%= article.description.substr(0, 300).concat("...") %>
+                                        </p>
+                                        <a href="/news/article/<%= article._id %>" class="button">View</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                        <% } %>
+    </div>

@@ -1,0 +1,55 @@
+<% layout("layouts/boilerplate.ejs") %>
+    <link rel="stylesheet" href="/css/news.min.css">
+    <%- include('../partials/flash') %>
+    <a href="/news" class="py-1 px-2 mt-3 ms-2 text-button position-fixed">Back</a>
+        <div class="container">            
+            <% if (!article.images.length){ %>
+                <img id="headline" class="img-fluid mb-5"
+                    src="https://res.cloudinary.com/jamestan/image/upload/v1626106130/Adora-background_moklv1.jpg"
+                    alt="Adora's headline cover picture">
+                <% }else{ %>
+                    <div id="newsCarousel" class="carousel slide carousel-fade bg-transparent mb-3" data-bs-ride="carousel"
+                        data-bs-interval="false">
+                        <div class="carousel-inner">
+                            <% article.images.forEach((image, i)=> {%>
+                                <div class="carousel-item  d-flex align-items-center justify-content-center <%= i===0 ? 'active' : '' %>"
+                                    style="height: 360px;">
+                                    <img src="<%= image.url %>" class="card-img-top w-auto h-100 "
+                                        alt="<%= image.filename %> ">
+                                </div>
+                                <% }) %>
+                        </div>
+                        <% if (article.images.length> 1) {%>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#campgroundCarousel"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#campgroundCarousel"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                            <% } %>
+                    </div>
+                    <% } %>
+                        <h1 class="text-center">
+                            <%= article.title %>
+                        </h1>
+                        <p class="text-muted">Date Modified: <%= article.dateModified %>
+                        </p>
+                        <p>
+                            <%= article.description %>
+                        </p>
+                        <% if ((currentUser && article.author.equals(currentUser._id)) || (currentUser &&
+                            article.author.equals(adminId))) {%>
+                            <div>
+                                <a href="/news/article/<%= article._id %>/edit" class="card-link btn btn-info">Edit</a>
+                                <form class="d-inline" method="POST"
+                                    action="/news/article/<%= article._id %>?_method=DELETE">
+                                    <button class="btn btn-danger"">Delete</button>
+                            </form>
+                        </div>
+                        <% } %>
+                    </div>
+        </div>

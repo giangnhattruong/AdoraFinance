@@ -1,0 +1,52 @@
+<% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/css/news.min.css">
+    <script defer src="/js/form-validation.js"></script>
+    <script defer src="/js/form-once-click.js"></script>
+
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card-body">
+                <h5 class="card-title">Create new article</h5>
+                <form method="POST" action="/news" class="needs-validation" enctype="multipart/form-data"
+                    novalidate>
+                    <div class="form-group mb-3">
+                        <label for="title" aria-label="Title">Title</label>
+                        <input type="text" id="title" name="article[title]" class="form-control"
+                            placeholder="Enter article title" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="category" aria-label="Category">Category</label>
+                        <select class="form-select text-black" name="article[category]" id="category" required>
+                            <option disabled selected>Select an option</option>
+                            <option value="news">News</option>
+                            <option value="knowledge">Knowledge</option>
+                        </select>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="form-label" aria-label="Description">Description</label>
+                        <textarea id="description" name="article[description]" class="form-control"
+                            placeholder="Enter article description" required></textarea>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Upload Images</label>
+                        <input type="file" name="image" id="image" class="form-control" multiple>
+                    </div>
+                    <div class="my-3">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary">Submit</button>
+                            <a href="/news" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

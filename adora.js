@@ -8,6 +8,9 @@ const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const path = require("path");
 const ejsMate = require("ejs-mate");
+const methodOverride = require('method-override');
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const flash = require("connect-flash");
@@ -15,7 +18,11 @@ const session = require("express-session");
 const ExpressError = require("./ultils/ExpressError");
 const secret = process.env.SECRET || "simplesessionsecret";
 const dbUrl = process.env.DB_URL;
+const adminId = process.env.ADORA_ADMIN_ID;
 const mainRoutes = require("./routes/main.js");
+const articleRoutes = require("./routes/articles.js");
+const userRoutes = require("./routes/users.js");
+const User = require('./models/users.js');
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
@@ -34,7 +41,7 @@ app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(methodOverride('_method'));
 
 const store = MongoStore.create({
   mongoUrl: dbUrl,
@@ -53,14 +60,25 @@ const sessionOptions = {
   cookie: {
     httpOnly: true,
     // secure: true,    // this should only turn on when we use HTTPS
-    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-    maxAge: 1000 * 60 * 60 * 24 * 7,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 1,
+    maxAge: 1000 * 60 * 60 * 24 * 1,
   },
 };
 app.use(session(sessionOptions));
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
+  if (!["/user/login", "/"].includes(req.originalUrl)) {
+    req.session.returnTo = req.originalUrl;
+  }
+  res.locals.currentUrl = req.originalUrl;
+  res.locals.adminId = adminId;
+  res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
@@ -110,7 +128,7 @@ app.use(
         "'self'",
         "blob:",
         "data:",
-        "https://res.cloudinary.com/jamestan/",
+        "https://res.cloudinary.com/",
         "https://images.unsplash.com/",
       ],
       fontSrc: ["'self'", ...fontSrcUrls],
@@ -119,14 +137,15 @@ app.use(
 );
 
 app.use("/", mainRoutes);
+app.use('/user', userRoutes);
+app.use("/news", articleRoutes);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page not found!", 404));
 });
 
 app.use((err, req, res, next) => {
-  const { status = 500 } = err;
-  if (!err.message) err.message = "Something went wrong!";
+  const { message = "Something went wrong!", status = 500 } = err;
   res.status(status).render("error", { req, err });
 });
 
