@@ -5,7 +5,8 @@ const { cloudinary } = require("../cloudinary/index");
 const date = Date.now();
 
 module.exports.renderIndex = wrapAsync(async (req, res, next) => {
-  const articles = await Article.find({});
+  const articlesReverse = await Article.find({});
+  const articles = articlesReverse.slice().reverse();
   res.render("news/index", { articles });
 });
 
@@ -49,10 +50,11 @@ module.exports.renderEditArticle = wrapAsync(async (req, res, next) => {
 });
 
 module.exports.renderSearchArticle = wrapAsync(async (req, res, next) => {
-  const articles = await Article.find({});
+  const articlesReverse = await Article.find({});
+  const articles = articlesReverse.slice().reverse();
   const foundArticles = [];
   articles.forEach((article) => {
-    if (article.name.toLowerCase().includes(req.query.q.toLowerCase())) {
+    if (article.title.toLowerCase().includes(req.query.q.toLowerCase())) {
       foundArticles.push(article);
     }
   });

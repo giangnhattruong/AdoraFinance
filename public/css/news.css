@@ -37,3 +37,7 @@ label input textarea {
 .valid-feedback {
   color: var(--textColor);
 }
+
+.mt-alerts {
+  z-index: 999;
+}
