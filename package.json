@@ -30,6 +30,6 @@
     "start": "node adora.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "giangnhattruong",
   "license": "ISC"
 }

@@ -36,3 +36,7 @@ label input textarea {
 .valid-feedback {
   color: var(--textColor);
 }
+
+.alert{
+  z-index:999
+}

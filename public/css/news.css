@@ -39,6 +39,5 @@ label input textarea {
 }
 
 .alert {
-  position: fixed;
-  z-index: 999;
+  z-index: 1000;
 }
