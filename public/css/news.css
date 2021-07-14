@@ -38,6 +38,7 @@ label input textarea {
   color: var(--textColor);
 }
 
-.mt-alerts {
+.alert {
+  position: fixed;
   z-index: 999;
 }
