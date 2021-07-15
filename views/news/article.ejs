@@ -39,7 +39,7 @@
                         <p class="text-muted">Date Modified: <%= article.dateModified %>
                         </p>
                         <p>
-                            <%= article.description %>
+                            <%- article.description %>
                         </p>
                         <% if ((currentUser && article.author.equals(currentUser._id)) || (currentUser &&
                             article.author.equals(adminId))) {%>

@@ -1,6 +1,13 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const { cloudinary } = require("../cloudinary");
+const slug = require("mongoose-slug-generator");
+const domPurifier = require("dompurify");
+const { JSDOM } = require("jsdom");
+const htmlPurify = domPurifier(new JSDOM().window);
+const { stripHtml } = require("string-strip-html");
+
+mongoose.plugin(slug);
 
 const imageSchema = new Schema({
   url: String,
@@ -24,6 +31,13 @@ const articleSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    snippet: String,
+    slug: {
+      type: String,
+      slug: "title",
+      unique: true,
+      slug_padding_size: 2,
+    },
   },
   options
 );
@@ -36,6 +50,14 @@ articleSchema.virtual("dateModified").get(function () {
   return `${date}/${month}/${year}`;
 });
 
+articleSchema.pre("validate", function (next) {
+  if (this.description) {
+    this.description = htmlPurify.sanitize(this.description);
+    this.snippet = stripHtml(this.description.substring(0,300)).result
+  }
+  next();
+});
+
 articleSchema.post("findOneAndDelete", async function (article) {
   if (article.images.length) {
     article.images.forEach(function (image) {
@@ -46,4 +68,4 @@ articleSchema.post("findOneAndDelete", async function (article) {
 
 const Article = mongoose.model("Article", articleSchema);
 
-module.exports = Article
+module.exports = Article;

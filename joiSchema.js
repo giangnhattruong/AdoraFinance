@@ -36,7 +36,8 @@ module.exports.articleSchema = Joi.object({
         title: Joi.string().required().escapeHTML(),
         category: Joi.string().required().escapeHTML(),
         images: Joi.object(),
-        description: Joi.string().required().escapeHTML()
+        description: Joi.string().required(),
+        snippet: Joi.string().escapeHTML(),
     }).required(),
     deleteImages: Joi.array()
 });

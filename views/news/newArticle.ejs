@@ -1,5 +1,7 @@
 <% layout('layouts/boilerplate') %>
-<link rel="stylesheet" href="/css/news.min.css">
+    <link rel="stylesheet" href="/css/news.min.css">
+    <script src="https://cdn.tiny.cloud/1/<%=process.env.TINY_API_KEY%>/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>tinymce.init({selector:'textarea'});</script>
     <script defer src="/js/form-validation.js"></script>
     <script defer src="/js/form-once-click.js"></script>
 
@@ -42,7 +44,7 @@
                     </div>
                     <div class="my-3">
                         <div class="d-grid gap-2">
-                            <button class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                             <a href="/news" class="btn btn-secondary">Cancel</a>
                         </div>
                     </div>
