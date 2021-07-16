@@ -13,11 +13,11 @@ router.get("/search", renderSearchArticle)
 router.get("/article/new", isLoggedIn, renderNewArticle);
 
 router
-    .route("/article/:id")
+    .route("/article/:slug/:id")
     .get(renderArticle)
     .put(isLoggedIn, isAuthor, uploadImages, validateArticle, editArticle)
     .delete(isLoggedIn, isAuthor, deleteArticle)
 
-router.get('/article/:id/edit', isLoggedIn, isAuthor, renderEditArticle)
+router.get('/article/:slug/:id/edit', isLoggedIn, isAuthor, renderEditArticle)
 
 module.exports = router;

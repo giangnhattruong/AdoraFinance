@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+// const mongoosePaginate = require('mongoose-paginate-v2');
 const { cloudinary } = require("../cloudinary");
 const slug = require("mongoose-slug-generator");
 const domPurifier = require("dompurify");
@@ -36,11 +37,13 @@ const articleSchema = new Schema(
       type: String,
       slug: "title",
       unique: true,
-      slug_padding_size: 2,
+      slug_padding_size: 3,
     },
   },
   options
 );
+
+// articleSchema.plugin(mongoosePaginate);
 
 articleSchema.virtual("dateModified").get(function () {
   const fullDate = new Date(this.date);

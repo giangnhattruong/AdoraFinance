@@ -1,27 +1,28 @@
 <% layout("layouts/boilerplate.ejs") %>
     <link rel="stylesheet" href="/css/news.min.css">
     <%- include("../partials/flash.ejs") %>
+    <a href="/news" class="py-1 px-2 mt-3 ms-2 text-button position-fixed">Back</a>
         <div class="container">
             <%- include("../partials/searchNews.ejs") %>
-                <% if (!foundArticles.length){ %>
+                <% if (!paginateFoundArticles.length){ %>
                     <p>No article found.</p>
                     <% } else { %>
-                        <% for (let article of foundArticles) { %>
+                        <% for (let article of paginateFoundArticles) { %>
                             <div class="card mb-3">
                                 <div class="row">
                                     <div class="col-md-4 d-flex align-items-center justify-content-center">
                                         <% if (!article.images.length) {%>
-                                            <img class="img-fluid h-100"
+                                            <img class="img-fluid rounded"
                                                 src="https://res.cloudinary.com/jamestan/image/upload/v1626106460/Adora-background-thumbnail_luhrkl.jpg"
                                                 alt="Adora news thumbnail">
                                             <% } else { %>
-                                                <img class="img-fluid h-100" src="<%= article.images[0].url %>" alt="">
+                                                <img class="img-fluid rounded" src="<%= article.images[0].url %>" alt="">
                                                 <% } %>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <h5 class="cart-title">
-                                                <a href="/news/article/<%= article._id %>"
+                                                <a href="/news/article/<%=article.slug%>/<%= article._id %>"
                                                     class="text-decoration-none text-white">
                                                     <%= article.title %>
                                                 </a>
@@ -29,7 +30,7 @@
                                             <p class="card-text">
                                                 <%= article.snippet.concat("...") %>
                                             </p>
-                                            <a href="/news/article/<%= article._id %>" class="button">View</a>
+                                            <a href="/news/article/<%=article.slug%>/<%= article._id %>" class="button">View</a>
                                         </div>
 
                                     </div>
@@ -37,4 +38,41 @@
                             </div>
                             <% } %>
                                 <% } %>
+                                <% if (parseInt(totalPages) > 1){ %>
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-center">
+                                            <li class="page-item <%=(parseInt(page) === 1) ? "disabled" : ""%>">
+                                                <a class="page-link" href="/news/search?q=<%=q%>&page=1">First</a>
+                                            </li>
+                                          <li class="page-item <%=(parseInt(page) === 1) ? "disabled" : ""%>">
+                                            <a class="page-link" href="/news/search?q=<%=q%>&page=<%=parseInt(page)-1%>" tabindex="-1" aria-disabled="<%=(parseInt(page) === 1) ? "true" : ""%>"><</a>
+                                          </li>
+                                          <% if (group !== 1){ %>
+                                            <li class="page-item">
+                                                <a class="page-link" href="/news/search?q=<%=q%>&page=<%=paginateOffset-groupLimit+1%>">...</a>
+                                            </li>
+                                            <% } %>
+                                          <% if (group !== totalPaginateGroups){ %>
+                                            <% for (let n=paginateOffset; n<(groupLimit*group); n++){ %>
+                                                <li class="page-item <%=(parseInt(page) === (n+1)) ? "active" : ""%>"><a class="page-link" href="/news/search?q=<%=q%>&page=<%=n+1%>"><%=n+1%></a></li>
+                                            <% } %>
+                                        <% } else { %>
+                                            <% for (let n=paginateOffset; n<parseInt(totalPages); n++){ %>
+                                                <li class="page-item <%=(parseInt(page) === (n+1)) ? "active" : ""%>"><a class="page-link" href="/news/search?q=<%=q%>&page=<%=n+1%>"><%=n+1%></a></li>
+                                        <% } %>
+                                        <% } %>
+                                        <% if (group !== totalPaginateGroups){ %>
+                                            <li class="page-item">
+                                                <a class="page-link" href="/news/search?q=<%=q%>&page=<%=paginateOffset+groupLimit+1%>">...</a>
+                                            </li>
+                                            <% } %>
+                                          <li class="page-item <%=(parseInt(page) === parseInt(totalPages)) ? "disabled" : ""%>">
+                                            <a class="page-link" href="/news/search?q=<%=q%>&page=<%=parseInt(page)+1%>" aria-disabled="<%=(parseInt(page) === parseInt(totalPages)) ? "true" : ""%>">></a>
+                                          </li>
+                                          <li class="page-item <%=(parseInt(page) === parseInt(totalPages)) ? "disabled" : ""%>">
+                                            <a class="page-link" href="/news/search?q=<%=q%>&page=<%=totalPages%>">Last</a>
+                                          </li>
+                                        </ul>
+                                      </nav>
+                                      <% } %> 
         </div>

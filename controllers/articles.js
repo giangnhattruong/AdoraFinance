@@ -3,10 +3,31 @@ const Article = require("../models/articles");
 const { cloudinary } = require("../cloudinary/index");
 
 const date = Date.now();
+const paginate = (array, page, size) => {
+  return array.slice((page - 1) * size, page * size);
+}
 
 module.exports.renderIndex = wrapAsync(async (req, res, next) => {
+  const { page = 1, size = 9 } = req.query;
+  // Pagination with mongoose-pagination-v2
+  // const getPagination = (page, size) => {
+  //   const limit = size ? +size : 9;
+  //   const offset = page ? (page-1) * limit : 0;
+  //   return { limit, offset };
+  // };
+  // const { limit, offset } = getPagination(page, size);
+  // const paginatedArticles = await Article.paginate({}, { limit, offset, sort:{date: "desc"}});
+  // const { totalPages } = paginatedArticles;
+  // const articles = paginatedArticles.docs;
   const articles = await Article.find({}).sort({ date: "desc"});
-  res.render("news/index", { articles });
+  const paginateArticles = paginate(articles, page, size);
+  const totalArticles = articles.length;
+  const totalPages = (totalArticles % size) !== 0 ? (Math.floor(totalArticles / size) + 1) : (totalArticles / size);
+  const groupLimit = 6;
+  const totalPaginateGroups = (totalPages % groupLimit) !== 0 ? (Math.floor(totalPages / groupLimit) + 1) : (totalPages / groupLimit);
+  const group = (page % groupLimit) !==0 ? (Math.floor(page / groupLimit) + 1) : (page / groupLimit);
+  const paginateOffset = (group-1) * groupLimit;
+  res.render("news/index", { paginateArticles, totalPages, page, groupLimit, totalPaginateGroups, group, paginateOffset });
 });
 
 module.exports.renderArticle = wrapAsync(async (req, res, next) => {
@@ -49,14 +70,22 @@ module.exports.renderEditArticle = wrapAsync(async (req, res, next) => {
 });
 
 module.exports.renderSearchArticle = wrapAsync(async (req, res, next) => {
+  const { page = 1, size = 9, q } = req.query;
   const articles = await Article.find({}).sort({ date: "desc"});
   const foundArticles = [];
   articles.forEach((article) => {
-    if (article.title.toLowerCase().includes(req.query.q.toLowerCase())) {
+    if (article.title.toLowerCase().includes(q.toLowerCase())) {
       foundArticles.push(article);
     }
   });
-  res.render("news/searchArticle", { foundArticles });
+  const paginateFoundArticles = paginate(foundArticles, page, size);
+  const totalArticles = foundArticles.length;
+  const totalPages = (totalArticles % size) !== 0 ? (Math.floor(totalArticles / size) + 1) : (totalArticles / size);
+  const groupLimit = 6;
+  const totalPaginateGroups = (totalPages % groupLimit) !== 0 ? (Math.floor(totalPages / groupLimit) + 1) : (totalPages / groupLimit);
+  const group = (page % groupLimit) !==0 ? (Math.floor(page / groupLimit) + 1) : (page / groupLimit);
+  const paginateOffset = (group-1) * groupLimit;
+  res.render("news/searchArticle", { paginateFoundArticles, q, totalPages, page, groupLimit, totalPaginateGroups, group, paginateOffset });
 });
 
 module.exports.editArticle = wrapAsync(async (req, res, next) => {

@@ -4,38 +4,78 @@
     <div class="container">
             <%- include("../partials/searchNews.ejs") %>
             <% if (currentUser) {%>
-                    <a href="/news/article/new" class="button mb-5">Create new article</a>
+                    <a href="/news/article/new" class="btn btn-danger mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-plus-circle text-white me-1" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                      </svg>Create new article</a>
                 <% } %>
-                    <% if (!articles.length){ %>
+                    <% if (!paginateArticles.length){ %>
                         <p class="my-3">No article found.</p>
                         <% } else { %>
-                    <% for (let article of articles) { %>
+                    <% paginateArticles.forEach((article, index) => { %>
                         <div class="card mb-3">
                             <div class="row">
                                 <div class="col-md-4 d-flex align-items-center justify-content-center">
                                     <% if (!article.images.length) {%>
-                                        <img class="img-fluid h-100" src="https://res.cloudinary.com/jamestan/image/upload/v1626106460/Adora-background-thumbnail_luhrkl.jpg" alt="Adora news thumbnail">
+                                        <img class="img-fluid rounded" src="https://res.cloudinary.com/jamestan/image/upload/v1626106460/Adora-background-thumbnail_luhrkl.jpg" alt="Adora news thumbnail">
                                         <% } else { %>
-                                            <img class="img-fluid h-100" src="<%=article.images[0].url%>"
+                                            <img class="img-fluid rounded" src="<%=article.images[0].url%>"
                                                 alt="">
                                             <% } %>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
                                         <h1 class="fs-2 cart-title">
-                                            <a href="/news/article/<%=article._id%>" class="text-decoration-none text-white">
+                                            <a href="/news/article/<%=article.slug%>/<%=article._id%>" class="text-decoration-none text-white">
                                                 <%=article.title%>
                                             </a>
                                         </h1>
                                         <p class="card-text">
                                             <%=article.snippet.concat("...")%>
                                         </p>
-                                        <a href="/news/article/<%= article._id %>" class="button">View</a>
+                                        <a href="/news/article/<%=article.slug%>/<%= article._id %>" class="button">View</a>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
+                        <% }) %>
                         <% } %>
-                        <% } %>
+                        <% if (parseInt(totalPages) > 1){ %>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item <%=(parseInt(page) === 1) ? "disabled" : ""%>">
+                                    <a class="page-link" href="/news?page=1">First</a>
+                                </li>
+                              <li class="page-item <%=(parseInt(page) === 1) ? "disabled" : ""%>">
+                                <a class="page-link" href="/news?page=<%=parseInt(page)-1%>" tabindex="-1" aria-disabled="<%=(parseInt(page) === 1) ? "true" : ""%>"><</a>
+                              </li>
+                              <% if (group !== 1){ %>
+                                <li class="page-item">
+                                    <a class="page-link" href="/news?page=<%=paginateOffset-groupLimit+1%>">...</a>
+                                </li>
+                                <% } %>
+                              <% if (group !== totalPaginateGroups){ %>
+                                <% for (let n=paginateOffset; n<(groupLimit*group); n++){ %>
+                                    <li class="page-item <%=(parseInt(page) === (n+1)) ? "active" : ""%>"><a class="page-link" href="/news?page=<%=n+1%>"><%=n+1%></a></li>
+                                <% } %>
+                            <% } else { %>
+                                <% for (let n=paginateOffset; n<parseInt(totalPages); n++){ %>
+                                    <li class="page-item <%=(parseInt(page) === (n+1)) ? "active" : ""%>"><a class="page-link" href="/news?page=<%=n+1%>"><%=n+1%></a></li>
+                            <% } %>
+                            <% } %>
+                            <% if (group !== totalPaginateGroups){ %>
+                                <li class="page-item">
+                                    <a class="page-link" href="/news?page=<%=paginateOffset+groupLimit+1%>">...</a>
+                                </li>
+                                <% } %>
+                              <li class="page-item <%=(parseInt(page) === parseInt(totalPages)) ? "disabled" : ""%>">
+                                <a class="page-link" href="/news?page=<%=parseInt(page)+1%>" aria-disabled="<%=(parseInt(page) === parseInt(totalPages)) ? "true" : ""%>">></a>
+                              </li>
+                              <li class="page-item <%=(parseInt(page) === parseInt(totalPages)) ? "disabled" : ""%>">
+                                <a class="page-link" href="/news?page=<%=totalPages%>">Last</a>
+                              </li>
+                            </ul>
+                          </nav>
+                          <% } %> 
     </div>

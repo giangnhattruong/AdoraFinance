@@ -3,14 +3,13 @@
 @import url("/css/footer.css");
 @import url("/css/buttons.css");
 
-
 main {
   padding-top: 5rem;
   padding-bottom: 3rem;
 }
 
 #headline {
-    box-shadow: var(--shadow2db);
+  box-shadow: var(--shadow2db);
 }
 
 .form {
@@ -18,7 +17,7 @@ main {
 }
 
 .form-select > option {
-    color: black;
+  color: black;
 }
 
 .card {
@@ -27,7 +26,7 @@ main {
 }
 
 #newsCarousel {
-    z-index: -1;
+  z-index: -1;
 }
 
 label input textarea {
@@ -40,4 +39,20 @@ label input textarea {
 
 .alert {
   z-index: 1000;
+}
+
+.page-link {
+  color: var(--textColor);
+  background-color: transparent;
+  border: 1px solid var(--buttonColor);
+}
+
+.page-item.disabled .page-link {
+  background-color: transparent;
+  border: 1px solid var(--buttonColor);
+}
+
+.page-item.active .page-link {
+  background-color: var(--buttonColor);
+  border: 1px solid white;
 }
