@@ -17,7 +17,7 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const ExpressError = require("./ultils/ExpressError");
 const secret = process.env.SECRET || "simplesessionsecret";
-const dbUrl = process.env.DB_URL;
+const dbUrl = `mongodb+srv://${process.env.DB_CRE}@aracluster.gyctd.mongodb.net/araDatabase?retryWrites=true&w=majority`;
 const adminId = process.env.ADORA_ADMIN_ID;
 const mainRoutes = require("./routes/main.js");
 const articleRoutes = require("./routes/articles.js");
