@@ -9,7 +9,7 @@
             <div class="card-body">
                 <h5 class="card-title">Edit: <%= article.title %>
                 </h5>
-                <form method="POST" action="/news/article/<%= article._id %>?_method=PUT" enctype="multipart/form-data"
+                <form method="POST" action="/news/article/<%=article.slug%>/<%= article._id %>?_method=PUT" enctype="multipart/form-data"
                     novalidate class="needs-validation">
                     <div class="form-group mb-3">
                         <label for="title" aria-label="Title">Title</label>
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <div class=" my-4">
-                        <a href="/news/article/<%= article._id %>" class="text-button">Cancel</a>
+                        <a href="/news/article/<%=article.slug%>/<%= article._id %>" class="text-button">Cancel</a>
                         <button class="button">Submit</button>
                     </div>
                 </form>

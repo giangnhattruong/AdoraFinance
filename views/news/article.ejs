@@ -44,9 +44,9 @@
                         <% if ((currentUser && article.author.equals(currentUser._id)) || (currentUser &&
                             article.author.equals(adminId))) {%>
                             <div>
-                                <a href="/news/article/<%=article.slug%>/<%= article._id %>/edit" class="card-link btn btn-info">Edit</a>
+                                <a href="/news/article/<%=article.slug%>/<%=article._id%>/edit" class="card-link btn btn-info">Edit</a>
                                 <form class="d-inline" method="POST"
-                                    action="/news/article/<%=article.slug%>/<%= article._id %>?_method=DELETE">
+                                    action="/news/article/<%=article.slug%>/<%=article._id%>?_method=DELETE">
                                     <button class="btn btn-danger"">Delete</button>
                             </form>
                         </div>

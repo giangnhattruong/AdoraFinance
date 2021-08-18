@@ -57,7 +57,7 @@ module.exports.createNewArticle = wrapAsync(async (req, res, next) => {
   article.date = Date.now();
   await article.save();
   req.flash("success", "Successfully created a new article!");
-  res.redirect(`/news/article/${article._id}`);
+  res.redirect(`/news`);
 });
 
 module.exports.renderEditArticle = wrapAsync(async (req, res, next) => {
@@ -90,7 +90,7 @@ module.exports.renderSearchArticle = wrapAsync(async (req, res, next) => {
 
 module.exports.editArticle = wrapAsync(async (req, res, next) => {
   console.log(`Deleting: ${req.body.deleteImages}`);
-  const { id } = req.params;
+  const { slug, id } = req.params;
   const { title, category, description } = req.body.article;
   const article = await Article.findById(id);
   const images = req.files.map((file) => ({
@@ -121,7 +121,7 @@ module.exports.editArticle = wrapAsync(async (req, res, next) => {
     });
   }
   req.flash("success", "Successfully updated a article!");
-  res.redirect(`/news/article/${req.params.id}`);
+  res.redirect(`/news/article/${article.slug}/${req.params.id}`);
 });
 
 module.exports.deleteArticle = wrapAsync(async (req, res, next) => {
