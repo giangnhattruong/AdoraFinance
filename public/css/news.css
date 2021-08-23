@@ -29,6 +29,18 @@ main {
   z-index: -1;
 }
 
+#newsCarousel .card-img-top {
+  width: auto;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  #newsCarousel .card-img-top {
+    width: 100%;
+    height: auto;
+  }
+}
+
 label input textarea {
   font-size: var(--body1);
 }
