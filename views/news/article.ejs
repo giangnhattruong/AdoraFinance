@@ -14,7 +14,7 @@
                             <% article.images.forEach((image, i)=> {%>
                                 <div class="carousel-item  d-flex align-items-center justify-content-center <%= i===0 ? 'active' : '' %>"
                                     style="height: 360px;">
-                                    <img src="<%= image.url %>" class="card-img-top w-auto h-100"
+                                    <img src="<%= image.url %>" class="card-img-top w-100 h-auto"
                                         alt="<%= image.filename %> ">
                                 </div>
                                 <% }) %>
