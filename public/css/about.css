@@ -65,11 +65,16 @@ main p {
 }
 
 #trust-wallet {
-  height: 7.5rem;
+  height: 6.9rem;
 }
 
 #metamask {
-  height: 4.2rem;
+  height: 3.6rem;
+}
+
+#safepal {
+  height: 2.7rem;
+  padding: 0 2rem;
 }
 
 .text-small {
