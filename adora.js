@@ -22,6 +22,7 @@ const adminId = process.env.ADORA_ADMIN_ID;
 const mainRoutes = require("./routes/main.js");
 const articleRoutes = require("./routes/articles.js");
 const userRoutes = require("./routes/users.js");
+const apiRoutes = require("./routes/circSupply.js");
 const User = require('./models/users.js');
 
 mongoose.connect(dbUrl, {
@@ -142,6 +143,7 @@ app.use(
 app.use("/", mainRoutes);
 app.use('/user', userRoutes);
 app.use("/news", articleRoutes);
+app.use("/api/circulating-supply", apiRoutes);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page not found!", 404));

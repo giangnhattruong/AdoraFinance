@@ -42,7 +42,7 @@
                             <%- article.description %>
                         </p>
                         <% if ((currentUser && article.author.equals(currentUser._id)) || (currentUser &&
-                            article.author.equals(adminId))) {%>
+                            currentUser._id.equals(adminId))) {%>
                             <div>
                                 <a href="/news/article/<%=article.slug%>/<%=article._id%>/edit" class="card-link btn btn-info">Edit</a>
                                 <form class="d-inline" method="POST"

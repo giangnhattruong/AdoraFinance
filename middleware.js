@@ -37,10 +37,18 @@ module.exports.isLoggedIn = (req, res, next) => {
 
 module.exports.isAuthor = async (req, res, next) => {
     const article = await Article.findById(req.params.id);
-    if (!article.author.equals(req.user._id) && !article.author.equals(adminId)) {
+    if (!article.author.equals(req.user._id) && !adminId === req.user._id) {
         req.flash('error', 'You do not have permission.');
         return res.redirect(`/news/article/${req.params.id}`);
     };
+    next();
+};
+
+module.exports.isAdmin = async (req, res, next) => {
+    if (!req.user._id.equals(adminId)) {
+        req.flash('error', 'You do not have permission.');
+        return res.redirect(`/`);
+    }
     next();
 };
 
