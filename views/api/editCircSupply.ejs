@@ -7,6 +7,6 @@
     action="/api/circulating-supply/edit?_method=PUT"
 >
     <label class="form-label me-1 " for="circSupply">Edit ARA circulating supply</label>
-    <input class="form-control me-1" type="number" id="circSupply" name="circSupply" value="<%=circSupply.circSupply%>" required>
+    <input class="form-control me-1" type="number" step="0.000000000000000001" id="circSupply" name="circSupply" value="<%=circSupply.circSupply%>" required>
     <button class="button text-center align-self-center mt-3">Submit</button>
 </form>
