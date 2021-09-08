@@ -1,3 +1,3 @@
 # AdoraFinance
 
-Click here check out my website.(https://adora.finance)
+]Click here check out my website.](https://adora.finance)
