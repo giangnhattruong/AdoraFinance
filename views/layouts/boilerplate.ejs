@@ -11,9 +11,12 @@
     <link rel="stylesheet" href="/bootstrap502/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Philosopher&family=Roboto&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Philosopher&family=Roboto&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/fontawesome5153/css/all.min.css">
     <script defer src="/bootstrap502/js/bootstrap.bundle.min.js"></script>
+    <script src="https://widgets.rubic.exchange/iframe/bundle.min.js"></script>
 </head>
 
 <body>
@@ -22,6 +25,25 @@
             <%-body%>
         </main>
         <%- include('../partials/footer') %>
+            <script defer type="text/javascript">
+                // describe widget configuration and saving to a global variable for future use
+                var configuration = {
+                    from: 'ETH',
+                    to: 'RBC',
+                    fromChain: 'ETH',
+                    toChain: 'ETH',
+                    amount: 1,
+                    iframe: 'flex',
+                    hideSelectionFrom: false,
+                    hideSelectionTo: true,
+                    theme: 'dark',
+                    background: '#28372e'
+                }
+                // prevent accidental changes to the object, for example, when re-creating a widget for another theme
+                Object.freeze(configuration);
+                // create widget
+                rubicWidget.init(configuration);
+            </script>
 </body>
 
 </html>
